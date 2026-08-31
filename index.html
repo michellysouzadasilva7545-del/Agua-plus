@@ -106,4 +106,220 @@ button:disabled {
 .recompensa {
   font-size: 22px;
   margin: 12px;
+}}
+
+button:active {
+  transform: scale(.97);
 }
+
+button:disabled {
+  background: #7bb0df;
+}
+
+.recompensa {
+  font-size: 22px;
+  margin: 12px;
+}
+
+.progresso {
+  font-size: 19px;
+}
+
+.mensagem {
+  margin-top: 15px;
+  font-weight: bold;
+  min-height: 24px;
+}
+
+.reset {
+  background: #777;
+  font-size: 16px;
+  padding: 12px;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <span>💧</span> ÁGUA+
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>META DE HOJE</h2>
+    <div id="garrafas" class="garrafas"></div>
+
+    <div class="contador">
+      <span id="quantidade">0</span> / 6
+    </div>
+
+    <div class="faltam" id="faltam">
+      Faltam 6 garrafas
+    </div>
+
+    <div class="info">
+      🪙 Créditos hoje: <b id="creditosHoje">0</b>
+    </div>
+
+    <button id="beber">💧 BEBI ÁGUA</button>
+
+    <div class="mensagem" id="mensagem"></div>
+  </div>
+
+  <div class="card">
+    <div class="info">
+      🔥 Sequência: <b id="sequencia">0</b> dias
+    </div>
+
+    <div class="info">
+      🪙 Carteira: <b id="carteira">0</b> créditos
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎁 Próxima recompensa</h2>
+
+    <div class="recompensa">🍕 Pizza</div>
+
+    <b class="progresso">
+      <span id="progresso">0</span> / 20 créditos
+    </b>
+  </div>
+
+  <div class="card">
+    <button class="reset" id="resetar">
+      🔄 Reiniciar progresso de hoje
+    </button>
+  </div>
+
+</div>
+
+<script>
+
+const META = 6;
+
+let dados = JSON.parse(localStorage.getItem("aguaPlus")) || {
+  data: "",
+  bebidas: 0,
+  carteira: 0,
+  sequencia: 0
+};
+
+function hoje() {
+  const d = new Date();
+
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+}
+
+function salvar() {
+  localStorage.setItem("aguaPlus", JSON.stringify(dados));
+}
+
+function novoDia() {
+  const data = hoje();
+
+  if (dados.data !== data) {
+
+    if (dados.data !== "" && dados.bebidas >= META) {
+      dados.sequencia++;
+    }
+
+    dados.data = data;
+    dados.bebidas = 0;
+
+    salvar();
+  }
+}
+
+function atualizar() {
+
+  document.getElementById("quantidade").textContent =
+    dados.bebidas;
+
+  const faltam = Math.max(META - dados.bebidas, 0);
+
+  document.getElementById("faltam").textContent =
+    faltam === 0
+      ? "🎉 Meta cumprida!"
+      : "Faltam " + faltam + " garrafas";
+
+  document.getElementById("creditosHoje").textContent =
+    dados.bebidas;
+
+  document.getElementById("carteira").textContent =
+    dados.carteira;
+
+  document.getElementById("sequencia").textContent =
+    dados.sequencia;
+
+  document.getElementById("progresso").textContent =
+    dados.carteira % 20;
+
+  const area = document.getElementById("garrafas");
+
+  area.innerHTML = "";
+
+  for (let i = 0; i < META; i++) {
+
+    const agua = document.createElement("span");
+
+    agua.className = "garrafa";
+
+    if (i < dados.bebidas) {
+      agua.classList.add("cheia");
+    }
+
+    agua.textContent = "💧";
+
+    area.appendChild(agua);
+  }
+
+  const botao = document.getElementById("beber");
+
+  if (dados.bebidas >= META) {
+    botao.disabled = true;
+    botao.textContent = "🎉 META CUMPRIDA!";
+  } else {
+    botao.disabled = false;
+    botao.textContent = "💧 BEBI ÁGUA";
+  }
+}
+
+document.getElementById("beber").onclick = function() {
+
+  if (dados.bebidas >= META) return;
+
+  dados.bebidas++;
+  dados.carteira++;
+
+  salvar();
+  atualizar();
+
+  document.getElementById("mensagem").textContent =
+    dados.bebidas === META
+      ? "🎉 Parabéns! Meta cumprida!"
+      : "💧 Muito bem!";
+
+};
+
+document.getElementById("resetar").onclick = function() {
+
+  dados.bebidas = 0;
+
+  salvar();
+  atualizar();
+
+};
+
+novoDia();
+atualizar();
+
+</script>
+
+</body>
+</html>
