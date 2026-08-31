@@ -285,7 +285,15 @@ function atualizarTela() {
 
 atualizarTela();
 
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js")
+        .then(() => console.log("ÁGUA+ funcionando offline"))
+        .catch(() => console.log("Erro ao ativar modo offline"));
+    });
+  }
 </script>
-
+  
 </body>
 </html>
