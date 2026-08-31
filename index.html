@@ -1,299 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1677F2">
-  <link rel="manifest" href="manifest.json">
-  <title>ÁGUA+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1976d2">
+<title>ÁGUA+</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f8ff;
-      color: #12356b;
-    }
-
-    .app {
-      max-width: 430px;
-      min-height: 100vh;
-      margin: auto;
-      background: white;
-      padding: 20px;
-    }
-
-    h1 {
-      margin-top: 5px;
-      text-align: center;
-    }
-
-    .azul {
-      color: #1677F2;
-    }
-
-    .card {
-      background: white;
-      border-radius: 22px;
-      padding: 22px;
-      margin: 15px 0;
-      text-align: center;
-      box-shadow: 0 4px 18px #dce8f5;
-    }
-
-    .meta {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .garrafas {
-      font-size: 38px;
-      margin: 20px 0;
-    }
-
-    .apagada {
-      filter: grayscale(1);
-      opacity: 0.25;
-    }
-
-    .numero {
-      font-size: 45px;
-      font-weight: bold;
-    }
-
-    .credito {
-      font-size: 18px;
-      margin: 15px;
-    }
-
-    button {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 15px;
-      background: #1677F2;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .recompensa {
-      font-size: 18px;
-      line-height: 1.8;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <h1>💧 ÁGUA<span class="azul">+</span></h1>
-
-  <div class="card">
-
-    <div class="meta">META DE HOJE</div>
-
-    <div class="garrafas" id="garrafas"></div>
-
-    <div class="numero">
-      <span id="quantidade">0</span> / 6
-    </div>
-
-    <p id="mensagem">Faltam 6 garrafas</p>
-
-    <div class="credito">
-      🪙 Créditos hoje:
-      <strong id="creditoHoje">0,00</strong>
-    </div>
-
-    <button onclick="beberAgua()">
-      💧 BEBI ÁGUA
-    </button>
-
-  </div>
-
-  <div class="card recompensa">
-
-    🔥 Sequência:
-    <strong id="sequencia">0</strong> dias
-
-    <br>
-
-    🪙 Carteira:
-    <strong id="saldo">0,00</strong> créditos
-
-  </div>
-
-  <div class="card">
-
-    <h2>🎁 Próxima recompensa</h2>
-
-    🍕 Pizza
-
-    <br>
-
-    <strong>20 créditos</strong>
-
-    <br><br>
-
-    Progresso:
-    <strong id="progresso">0,00 / 20</strong>
-
-  </div>
-
-</div>
-
-<script>
-
-let dados = JSON.parse(
-  localStorage.getItem("aguaMais")
-) || {
-  garrafas: 0,
-  creditoHoje: 0,
-  saldo: 0,
-  sequencia: 0
-};
-
-
-function salvar() {
-
-  localStorage.setItem(
-    "aguaMais",
-    JSON.stringify(dados)
-  );
-
+<style>
+* {
+  box-sizing: border-box;
 }
 
-
-function beberAgua() {
-
-  if (dados.garrafas >= 6) {
-
-    alert("🎉 Você já completou a meta de hoje!");
-
-    return;
-
-  }
-
-  dados.garrafas++;
-
-
-  // 3 garrafas = 0,50 crédito
-
-  if (dados.garrafas === 3) {
-
-    dados.creditoHoje = 0.50;
-
-    dados.saldo += 0.50;
-
-  }
-
-
-  // 6 garrafas = mais 0,50
-  // total do dia = 1,00
-
-  if (dados.garrafas === 6) {
-
-    dados.creditoHoje = 1.00;
-
-    dados.saldo += 0.50;
-
-    dados.sequencia++;
-
-    alert("🎉 META COMPLETA!\n\nVocê ganhou 1 crédito hoje!");
-
-  }
-
-
-  salvar();
-
-  atualizarTela();
-
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5faff;
+  color: #173f70;
 }
 
-
-function atualizarTela() {
-
-  document.getElementById("quantidade")
-    .textContent = dados.garrafas;
-
-
-  document.getElementById("creditoHoje")
-    .textContent =
-    dados.creditoHoje.toFixed(2).replace(".", ",");
-
-
-  document.getElementById("saldo")
-    .textContent =
-    dados.saldo.toFixed(2).replace(".", ",");
-
-
-  document.getElementById("sequencia")
-    .textContent = dados.sequencia;
-
-
-  document.getElementById("progresso")
-    .textContent =
-    Math.min(dados.saldo, 20)
-    .toFixed(2)
-    .replace(".", ",")
-    + " / 20";
-
-
-  if (dados.garrafas === 6) {
-
-    document.getElementById("mensagem")
-      .textContent = "🎉 Meta concluída!";
-
-  } else {
-
-    document.getElementById("mensagem")
-      .textContent =
-      "Faltam "
-      + (6 - dados.garrafas)
-      + " garrafas";
-
-  }
-
-
-  let html = "";
-
-  for (let i = 1; i <= 6; i++) {
-
-    if (i <= dados.garrafas) {
-
-      html += "💧";
-
-    } else {
-
-      html += '<span class="apagada">💧</span>';
-
-    }
-
-  }
-
-  document.getElementById("garrafas")
-    .innerHTML = html;
-
+header {
+  text-align: center;
+  padding: 28px 10px 18px;
+  font-size: 32px;
+  font-weight: bold;
 }
 
+header span {
+  font-size: 45px;
+}
 
-atualizarTela();
+.container {
+  width: 92%;
+  max-width: 500px;
+  margin: auto;
+}
 
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./service-worker.js")
-        .then(() => console.log("ÁGUA+ funcionando offline"))
-        .catch(() => console.log("Erro ao ativar modo offline"));
-    });
-  }
-</script>
-  
-</body>
-</html>
+.card {
+  background: white;
+  border-radius: 28px;
+  padding: 28px 20px;
+  margin-bottom: 22px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(20,80,130,.10);
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 25px;
+}
+
+.garrafas {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.garrafa {
+  font-size: 42px;
+  opacity: .20;
+  transition: .2s;
+}
+
+.garrafa.cheia {
+  opacity: 1;
+}
+
+.contador {
+  font-size: 54px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.faltam {
+  font-size: 21px;
+  margin-bottom: 18px;
+}
+
+.info {
+  font-size: 19px;
+  margin: 12px 0;
+}
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 18px;
+  font-size: 21px;
+  font-weight: bold;
+  color: white;
+  background: #1976d2;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+button:disabled {
+  background: #7bb0df;
+}
+
+.recompensa {
+  font-size: 22px;
+  margin: 12px;
+}
