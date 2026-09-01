@@ -1172,8 +1172,381 @@ function atualizarInicio() {
         progresso + "%";
 
 }
+    /* =====================================================
+   CARTEIRA
+===================================================== */
+
+function atualizarCarteira() {
+
+    document.getElementById(
+        "saldoCarteira"
+    ).textContent =
+        formatarCredito(dados.carteira);
+
+
+    document.getElementById(
+        "totalGanhos"
+    ).textContent =
+        formatarCredito(dados.totalGanhos);
+
+
+    document.getElementById(
+        "totalGastos"
+    ).textContent =
+        formatarCredito(dados.totalGastos);
+
+
+    document.getElementById(
+        "saldoResumo"
+    ).textContent =
+        formatarCredito(dados.carteira);
+
+}
 
 
 /* =====================================================
-   CARTEIRA
-================
+   RECOMPENSAS
+===================================================== */
+
+function atualizarRecompensas() {
+
+    document.getElementById(
+        "saldoParaPizza"
+    ).textContent =
+        "Seu saldo: " +
+        formatarCredito(dados.carteira) +
+        " créditos";
+
+
+    const botao =
+        document.getElementById("btnPizza");
+
+
+    if (dados.carteira >= CUSTO_PIZZA) {
+
+        botao.disabled = false;
+        botao.textContent =
+            "TROCAR POR PIZZA";
+
+    } else {
+
+        botao.disabled = true;
+        botao.textContent =
+            "FALTAM " +
+            formatarCredito(
+                CUSTO_PIZZA - dados.carteira
+            ) +
+            " CRÉDITOS";
+
+    }
+
+}
+
+
+/* =====================================================
+   CONFIRMAÇÃO DE RESGATE
+===================================================== */
+
+function confirmarResgate() {
+
+    if (dados.carteira < CUSTO_PIZZA) {
+        return;
+    }
+
+
+    document.getElementById(
+        "saldoConfirmacao"
+    ).textContent =
+        formatarCredito(dados.carteira);
+
+
+    document
+        .getElementById("modalResgate")
+        .classList.add("aberto");
+
+}
+
+
+function fecharModalResgate() {
+
+    document
+        .getElementById("modalResgate")
+        .classList.remove("aberto");
+
+}
+
+
+/* =====================================================
+   RESGATAR PIZZA
+===================================================== */
+
+function resgatarPizza() {
+
+    if (dados.carteira < CUSTO_PIZZA) {
+
+        fecharModalResgate();
+
+        return;
+
+    }
+
+
+    dados.carteira =
+        Number(
+            (
+                dados.carteira -
+                CUSTO_PIZZA
+            ).toFixed(2)
+        );
+
+
+    dados.totalGastos =
+        Number(
+            (
+                dados.totalGastos +
+                CUSTO_PIZZA
+            ).toFixed(2)
+        );
+
+
+    dados.historicoCreditos.unshift({
+
+        data: obterData(),
+
+        horario: obterDataHora(),
+
+        tipo: "gasto",
+
+        valor: CUSTO_PIZZA,
+
+        descricao: "Resgate de Pizza"
+
+    });
+
+
+    salvar();
+
+    fecharModalResgate();
+
+    atualizarTudo();
+
+    alert(
+        "🍕 Recompensa resgatada com sucesso!"
+    );
+
+}
+
+
+/* =====================================================
+   HISTÓRICO DE ÁGUA
+===================================================== */
+
+function atualizarHistoricoAgua() {
+
+    const lista =
+        document.getElementById(
+            "historicoAgua"
+        );
+
+
+    if (
+        dados.historicoAgua.length === 0
+    ) {
+
+        lista.innerHTML =
+            '<li class="vazio">' +
+            'Nenhum registro de água ainda.' +
+            '</li>';
+
+        return;
+
+    }
+
+
+    lista.innerHTML =
+        dados.historicoAgua
+        .map(item => {
+
+            return `
+            <li class="item">
+
+                <div>
+                    <strong>
+                        💧 ${item.numero}ª garrafa
+                    </strong>
+
+                    <small>
+                        ${item.horario}
+                    </small>
+                </div>
+
+                <div>
+                    ${item.volume} ml
+                </div>
+
+            </li>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =====================================================
+   HISTÓRICO DE CRÉDITOS
+===================================================== */
+
+function atualizarHistoricoCreditos() {
+
+    const lista =
+        document.getElementById(
+            "historicoCreditos"
+        );
+
+
+    if (
+        dados.historicoCreditos.length === 0
+    ) {
+
+        lista.innerHTML =
+            '<li class="vazio">' +
+            'Nenhuma movimentação ainda.' +
+            '</li>';
+
+        return;
+
+    }
+
+
+    lista.innerHTML =
+        dados.historicoCreditos
+        .map(item => {
+
+            const positivo =
+                item.tipo === "ganho";
+
+
+            return `
+            <li class="item">
+
+                <div>
+                    <strong>
+                        ${item.descricao}
+                    </strong>
+
+                    <small>
+                        ${item.horario}
+                    </small>
+                </div>
+
+                <div class="${
+                    positivo
+                    ? "valor-positivo"
+                    : "valor-negativo"
+                }">
+
+                    ${
+                        positivo
+                        ? "+"
+                        : "-"
+                    }
+
+                    ${formatarCredito(item.valor)}
+
+                </div>
+
+            </li>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =====================================================
+   PERFIL
+===================================================== */
+
+function atualizarPerfil() {
+
+    document.getElementById(
+        "perfilSequencia"
+    ).textContent =
+        dados.sequencia + " dias";
+
+
+    document.getElementById(
+        "perfilCarteira"
+    ).textContent =
+        formatarCredito(dados.carteira);
+
+
+    document.getElementById(
+        "diasCompletos"
+    ).textContent =
+        dados.diasCompletos;
+
+}
+
+
+/* =====================================================
+   ATUALIZAR TUDO
+===================================================== */
+
+function atualizarTudo() {
+
+    verificarNovoDia();
+
+    atualizarInicio();
+
+    atualizarCarteira();
+
+    atualizarRecompensas();
+
+    atualizarHistoricoAgua();
+
+    atualizarHistoricoCreditos();
+
+    atualizarPerfil();
+
+}
+
+
+/* =====================================================
+   FORMATAÇÃO
+===================================================== */
+
+function formatarCredito(valor) {
+
+    const numero = Number(valor);
+
+    if (
+        Number.isInteger(numero)
+    ) {
+
+        return numero.toString();
+
+    }
+
+
+    return numero
+        .toFixed(2)
+        .replace(".", ",");
+
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+verificarNovoDia();
+
+atualizarTudo();
+
+</script>
+
+</body>
+</html>
