@@ -2,13 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1976d2">
 
 <title>ÁGUA+</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -18,127 +17,1163 @@ body {
     font-family: Arial, sans-serif;
     background: #f3f9ff;
     color: #173f70;
+    padding-bottom: 90px;
 }
 
 header {
     text-align: center;
-    padding: 35px 10px 25px;
+    padding: 25px 15px 15px;
 }
 
 .logo {
-    font-size: 42px;
+    font-size: 36px;
     font-weight: bold;
 }
 
-.container {
-    padding: 0 20px 40px;
+.logo span {
+    font-size: 45px;
+}
+
+.app {
+    max-width: 600px;
+    margin: auto;
+    padding: 10px 16px;
+}
+
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
 }
 
 .card {
     background: white;
-    border-radius: 30px;
-    padding: 35px 25px;
+    border-radius: 28px;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+}
+
+.titulo {
     text-align: center;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-}
-
-h1 {
-    font-size: 32px;
-    margin: 0 0 30px;
-}
-
-.gotas {
-    font-size: 42px;
-    letter-spacing: 5px;
+    font-size: 28px;
+    font-weight: bold;
     margin-bottom: 25px;
 }
 
+.gotas {
+    text-align: center;
+    font-size: 39px;
+    line-height: 1.5;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.gota.vazia {
+    opacity: 0.18;
+}
+
 .contador {
-    font-size: 60px;
+    text-align: center;
+    font-size: 58px;
     font-weight: bold;
     margin: 10px 0;
 }
 
 .faltam {
-    font-size: 23px;
-    margin-bottom: 25px;
+    text-align: center;
+    font-size: 21px;
+    margin-bottom: 20px;
 }
 
-.creditos {
-    font-size: 20px;
-    margin-bottom: 25px;
+.creditosHoje {
+    text-align: center;
+    font-size: 19px;
+    margin-bottom: 20px;
 }
 
 button {
-    width: 100%;
     border: none;
-    border-radius: 20px;
-    padding: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
-    background: #1976d2;
     cursor: pointer;
+    font-family: inherit;
 }
 
-button:active {
-    transform: scale(0.97);
+.btn-agua {
+    width: 100%;
+    background: #1976d2;
+    color: white;
+    padding: 19px;
+    border-radius: 18px;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.btn-agua:active {
+    transform: scale(.98);
 }
 
 .info {
-    margin-top: 25px;
-    background: white;
-    border-radius: 30px;
-    padding: 25px;
     text-align: center;
-    font-size: 20px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+    font-size: 19px;
+    line-height: 1.5;
 }
 
+.recompensa-destaque {
+    text-align: center;
+}
+
+.recompensa-destaque .emoji {
+    font-size: 55px;
+}
+
+.recompensa-destaque h2 {
+    margin: 10px 0;
+    font-size: 25px;
+}
+
+.progresso {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.barra {
+    width: 100%;
+    height: 14px;
+    background: #e5edf5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.barra div {
+    height: 100%;
+    background: #1976d2;
+    width: 0%;
+    transition: width .3s;
+}
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #dce7f2;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 3px;
+    z-index: 100;
+}
+
+.menu button {
+    background: none;
+    color: #52708f;
+    font-size: 11px;
+    padding: 5px 4px;
+    min-width: 60px;
+}
+
+.menu button .icone {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 2px;
+}
+
+.menu button.ativo {
+    color: #1976d2;
+    font-weight: bold;
+}
+
+.lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item {
+    padding: 16px 4px;
+    border-bottom: 1px solid #e6edf3;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.item small {
+    color: #6d8195;
+}
+
+.valor-positivo {
+    color: #168548;
+    font-weight: bold;
+}
+
+.valor-negativo {
+    color: #d33c3c;
+    font-weight: bold;
+}
+
+.saldo {
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.saldo-label {
+    text-align: center;
+    font-size: 18px;
+    color: #637b92;
+}
+
+.recompensa {
+    text-align: center;
+}
+
+.recompensa .emoji {
+    font-size: 65px;
+}
+
+.recompensa h2 {
+    margin: 10px 0 5px;
+}
+
+.preco {
+    font-size: 21px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.btn-trocar {
+    width: 100%;
+    padding: 15px;
+    background: #1976d2;
+    color: white;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-trocar:disabled {
+    background: #aab7c4;
+    cursor: not-allowed;
+}
+
+.perfil-linha {
+    padding: 18px 5px;
+    border-bottom: 1px solid #e5edf3;
+    font-size: 18px;
+}
+
+.perfil-linha:last-child {
+    border-bottom: none;
+}
+
+.vazio {
+    text-align: center;
+    color: #71869a;
+    padding: 25px 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.aberto {
+    display: flex;
+}
+
+.modal-caixa {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+}
+
+.modal-caixa h2 {
+    margin-top: 0;
+}
+
+.campo {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccd9e5;
+    border-radius: 12px;
+    font-size: 17px;
+}
+
+.modal-botoes {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-botoes button {
+    flex: 1;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.cancelar {
+    background: #e9eef3;
+    color: #173f70;
+}
+
+.confirmar {
+    background: #1976d2;
+    color: white;
+}
+
+.alerta {
+    background: #fff7df;
+    border-radius: 15px;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 15px;
+    color: #765a00;
+}
+
+.sucesso {
+    background: #e8f8ef;
+    color: #176b3c;
+    padding: 14px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+@media (max-width: 380px) {
+    .logo {
+        font-size: 31px;
+    }
+
+    .contador {
+        font-size: 50px;
+    }
+
+    .gotas {
+        font-size: 33px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">💧 ÁGUA+</div>
+    <div class="logo">
+        <span>💧</span> ÁGUA+
+    </div>
 </header>
 
-<div class="container">
+<div class="app">
+
+<!-- ================= INÍCIO ================= -->
+
+<section id="inicio" class="tela ativa">
 
     <div class="card">
 
-        <h1>META DE HOJE</h1>
+        <div class="titulo">META DE HOJE</div>
 
-        <div class="gotas">
-            💧 💧 💧 💧 💧 💧
-        </div>
+        <div id="gotas" class="gotas"></div>
 
-        <div class="contador">
-            0 / 6
-        </div>
+        <div id="contador" class="contador">0 / 6</div>
 
-        <div class="faltam">
+        <div id="faltam" class="faltam">
             Faltam 6 garrafas
         </div>
 
-        <div class="creditos">
+        <div id="creditosHoje" class="creditosHoje">
             🪙 Créditos hoje: 0
         </div>
 
-        <button>
+        <button class="btn-agua" onclick="abrirRegistroAgua()">
             💧 BEBI ÁGUA
         </button>
 
     </div>
 
-    <div class="info">
-        🔥 Sequência: 0 dias
+    <div class="card info">
+        🔥 Sequência: <strong id="sequenciaInicio">0 dias</strong>
         <br><br>
-        🪙 Carteira: 0 créditos
+        🪙 Carteira: <strong id="carteiraInicio">0 créditos</strong>
+    </div>
+
+    <div class="card recompensa-destaque">
+
+        <div class="emoji">🎁</div>
+
+        <h2>Próxima recompensa</h2>
+
+        <div style="font-size:22px;">
+            🍕 Pizza
+        </div>
+
+        <div class="progresso">
+            <span id="progressoPizza">0 / 20 créditos</span>
+        </div>
+
+        <div class="barra">
+            <div id="barraPizza"></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTÓRICO ================= -->
+
+<section id="historico" class="tela">
+
+    <div class="card">
+
+        <div class="titulo">📜 HISTÓRICO</div>
+
+        <h3>💧 Consumo de água</h3>
+
+        <ul id="historicoAgua" class="lista"></ul>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🪙 Movimentações de créditos</h3>
+
+        <ul id="historicoCreditos" class="lista"></ul>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CARTEIRA ================= -->
+
+<section id="carteira" class="tela">
+
+    <div class="card">
+
+        <div class="titulo">👛 CARTEIRA</div>
+
+        <div class="saldo-label">
+            Saldo disponível
+        </div>
+
+        <div class="saldo" id="saldoCarteira">
+            0
+        </div>
+
+        <div style="text-align:center;font-size:18px;">
+            🪙 créditos
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>📊 Resumo</h3>
+
+        <div class="perfil-linha">
+            Créditos ganhos:
+            <strong id="totalGanhos">0</strong>
+        </div>
+
+        <div class="perfil-linha">
+            Créditos gastos:
+            <strong id="totalGastos">0</strong>
+        </div>
+
+        <div class="perfil-linha">
+            Saldo atual:
+            <strong id="saldoResumo">0</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RECOMPENSAS ================= -->
+
+<section id="recompensas" class="tela">
+
+    <div class="card">
+
+        <div class="titulo">🎁 RECOMPENSAS</div>
+
+        <div class="recompensa">
+
+            <div class="emoji">🍕</div>
+
+            <h2>Pizza</h2>
+
+            <div class="preco">
+                🪙 20 créditos
+            </div>
+
+            <div id="saldoParaPizza">
+                Seu saldo: 0 créditos
+            </div>
+
+            <br>
+
+            <button
+                id="btnPizza"
+                class="btn-trocar"
+                onclick="confirmarResgate()">
+                TROCAR POR PIZZA
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PERFIL ================= -->
+
+<section id="perfil" class="tela">
+
+    <div class="card">
+
+        <div class="titulo">👤 PERFIL</div>
+
+        <div class="perfil-linha">
+            💧 Meta diária
+            <strong style="float:right;">6 garrafas</strong>
+        </div>
+
+        <div class="perfil-linha">
+            🔥 Sequência
+            <strong style="float:right;" id="perfilSequencia">0 dias</strong>
+        </div>
+
+        <div class="perfil-linha">
+            🪙 Carteira
+            <strong style="float:right;" id="perfilCarteira">0</strong>
+        </div>
+
+        <div class="perfil-linha">
+            🏆 Dias completos
+            <strong style="float:right;" id="diasCompletos">0</strong>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>ℹ️ Como funciona</h3>
+
+        <p>
+            Registre suas garrafas durante o dia e complete
+            a meta de 6 garrafas.
+        </p>
+
+        <p>
+            A partir da 3ª garrafa você recebe créditos.
+        </p>
+
+        <p>
+            Ao completar 6 garrafas, o dia é concluído
+            e sua sequência aumenta.
+        </p>
+
+        <p>
+            Os créditos podem ser utilizados para trocar
+            por recompensas.
+        </p>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- ================= MENU ================= -->
+
+<nav class="menu">
+
+    <button id="menuInicio"
+            class="ativo"
+            onclick="mostrarTela('inicio')">
+        <span class="icone">🏠</span>
+        Início
+    </button>
+
+    <button id="menuHistorico"
+            onclick="mostrarTela('historico')">
+        <span class="icone">📜</span>
+        Histórico
+    </button>
+
+    <button id="menuCarteira"
+            onclick="mostrarTela('carteira')">
+        <span class="icone">👛</span>
+        Carteira
+    </button>
+
+    <button id="menuRecompensas"
+            onclick="mostrarTela('recompensas')">
+        <span class="icone">🎁</span>
+        Recompensas
+    </button>
+
+    <button id="menuPerfil"
+            onclick="mostrarTela('perfil')">
+        <span class="icone">👤</span>
+        Perfil
+    </button>
+
+</nav>
+
+
+<!-- ================= MODAL ÁGUA ================= -->
+
+<div id="modalAgua" class="modal">
+
+    <div class="modal-caixa">
+
+        <h2>💧 Registrar água</h2>
+
+        <p>
+            Registre uma garrafa de água.
+        </p>
+
+        <div class="campo">
+
+            <label for="volume">
+                Volume da garrafa
+            </label>
+
+            <select id="volume">
+
+                <option value="250">250 ml</option>
+                <option value="350">350 ml</option>
+                <option value="500" selected>500 ml</option>
+                <option value="750">750 ml</option>
+                <option value="1000">1 litro</option>
+
+            </select>
+
+        </div>
+
+        <div class="alerta">
+            A garrafa será registrada com data,
+            horário, número e volume.
+        </div>
+
+        <br>
+
+        <div class="modal-botoes">
+
+            <button
+                class="cancelar"
+                onclick="fecharModalAgua()">
+                Cancelar
+            </button>
+
+            <button
+                class="confirmar"
+                onclick="registrarAgua()">
+                Registrar
+            </button>
+
+        </div>
+
     </div>
 
 </div>
 
-</body>
-</html>
+
+<!-- ================= MODAL RESGATE ================= -->
+
+<div id="modalResgate" class="modal">
+
+    <div class="modal-caixa">
+
+        <h2>🍕 Trocar recompensa?</h2>
+
+        <p>
+            Você está trocando
+            <strong>20 créditos</strong>
+            por uma pizza.
+        </p>
+
+        <p>
+            Seu saldo atual:
+            <strong id="saldoConfirmacao">0</strong>
+            créditos
+        </p>
+
+        <div class="modal-botoes">
+
+            <button
+                class="cancelar"
+                onclick="fecharModalResgate()">
+                Cancelar
+            </button>
+
+            <button
+                class="confirmar"
+                onclick="resgatarPizza()">
+                Confirmar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DADOS
+===================================================== */
+
+const META = 6;
+const CUSTO_PIZZA = 20;
+
+let dados = JSON.parse(
+    localStorage.getItem("aguaPlusDados")
+) || {
+
+    garrafasHoje: 0,
+
+    creditosHoje: 0,
+
+    carteira: 0,
+
+    sequencia: 0,
+
+    diasCompletos: 0,
+
+    dataAtual: obterData(),
+
+    historicoAgua: [],
+
+    historicoCreditos: [],
+
+    totalGanhos: 0,
+
+    totalGastos: 0
+
+};
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+function obterData() {
+
+    const agora = new Date();
+
+    return agora.getFullYear() + "-" +
+        String(agora.getMonth() + 1).padStart(2, "0") + "-" +
+        String(agora.getDate()).padStart(2, "0");
+}
+
+
+function obterDataHora() {
+
+    const agora = new Date();
+
+    return agora.toLocaleDateString("pt-BR") +
+        " às " +
+        agora.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+}
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvar() {
+
+    localStorage.setItem(
+        "aguaPlusDados",
+        JSON.stringify(dados)
+    );
+
+}
+
+
+/* =====================================================
+   NOVO DIA
+===================================================== */
+
+function verificarNovoDia() {
+
+    const hoje = obterData();
+
+    if (dados.dataAtual !== hoje) {
+
+        /*
+        Se o dia anterior não foi completado,
+        a sequência é reiniciada.
+        */
+
+        if (dados.garrafasHoje < META) {
+            dados.sequencia = 0;
+        }
+
+        dados.garrafasHoje = 0;
+        dados.creditosHoje = 0;
+        dados.dataAtual = hoje;
+
+        salvar();
+
+    }
+
+}
+
+
+/* =====================================================
+   TELAS
+===================================================== */
+
+function mostrarTela(nome) {
+
+    document
+        .querySelectorAll(".tela")
+        .forEach(tela => {
+            tela.classList.remove("ativa");
+        });
+
+    document
+        .getElementById(nome)
+        .classList.add("ativa");
+
+
+    document
+        .querySelectorAll(".menu button")
+        .forEach(botao => {
+            botao.classList.remove("ativo");
+        });
+
+
+    const menu = document.getElementById(
+        "menu" +
+        nome.charAt(0).toUpperCase() +
+        nome.slice(1)
+    );
+
+    if (menu) {
+        menu.classList.add("ativo");
+    }
+
+
+    atualizarTudo();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   MODAL ÁGUA
+===================================================== */
+
+function abrirRegistroAgua() {
+
+    document
+        .getElementById("modalAgua")
+        .classList.add("aberto");
+
+}
+
+
+function fecharModalAgua() {
+
+    document
+        .getElementById("modalAgua")
+        .classList.remove("aberto");
+
+}
+
+
+/* =====================================================
+   REGISTRAR ÁGUA
+===================================================== */
+
+function registrarAgua() {
+
+    verificarNovoDia();
+
+    const volume =
+        document.getElementById("volume").value;
+
+
+    /*
+    A meta máxima é 6.
+
+    Se já completou 6, novas garrafas
+    podem ser registradas no histórico,
+    mas não alteram a meta nem geram
+    créditos.
+    */
+
+    const numero =
+        dados.historicoAgua.filter(
+            item => item.data === dados.dataAtual
+        ).length + 1;
+
+
+    dados.historicoAgua.unshift({
+
+        data: dados.dataAtual,
+
+        horario: obterDataHora(),
+
+        numero: numero,
+
+        volume: volume
+
+    });
+
+
+    /*
+    SOMENTE as primeiras 6 garrafas
+    contam para a meta.
+    */
+
+    if (dados.garrafasHoje < META) {
+
+        dados.garrafasHoje++;
+
+        /*
+        3ª garrafa:
+        +0,50 crédito
+
+        4ª e 5ª:
+        nenhum crédito adicional
+
+        6ª:
+        +0,50 crédito
+
+        Total diário = 1 crédito
+        */
+
+        if (dados.garrafasHoje === 3) {
+
+            adicionarCredito(
+                0.50,
+                "Bônus por atingir 3 garrafas"
+            );
+
+        }
+
+
+        if (dados.garrafasHoje === 6) {
+
+            adicionarCredito(
+                0.50,
+                "Bônus por completar a meta diária"
+            );
+
+
+            dados.sequencia++;
+
+            dados.diasCompletos++;
+
+        }
+
+    }
+
+
+    salvar();
+
+    fecharModalAgua();
+
+    atualizarTudo();
+
+}
+
+
+/* =====================================================
+   CRÉDITOS
+===================================================== */
+
+function adicionarCredito(valor, descricao) {
+
+    dados.creditosHoje =
+        Number(
+            (dados.creditosHoje + valor).toFixed(2)
+        );
+
+    dados.carteira =
+        Number(
+            (dados.carteira + valor).toFixed(2)
+        );
+
+    dados.totalGanhos =
+        Number(
+            (dados.totalGanhos + valor).toFixed(2)
+        );
+
+
+    dados.historicoCreditos.unshift({
+
+        data: dados.dataAtual,
+
+        horario: obterDataHora(),
+
+        tipo: "ganho",
+
+        valor: valor,
+
+        descricao: descricao
+
+    });
+
+}
+
+
+/* =====================================================
+   ATUALIZAR INÍCIO
+===================================================== */
+
+function atualizarInicio() {
+
+    let html = "";
+
+    for (
+        let i = 1;
+        i <= META;
+        i++
+    ) {
+
+        if (i <= dados.garrafasHoje) {
+
+            html +=
+                '<span class="gota">💧</span>';
+
+        } else {
+
+            html +=
+                '<span class="gota vazia">💧</span>';
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "gotas"
+    ).innerHTML = html;
+
+
+    document.getElementById(
+        "contador"
+    ).textContent =
+        dados.garrafasHoje + " / " + META;
+
+
+    const faltam =
+        META - dados.garrafasHoje;
+
+
+    document.getElementById(
+        "faltam"
+    ).textContent =
+        faltam > 0
+            ? "Faltam " + faltam + " garrafas"
+            : "Meta diária concluída! 🎉";
+
+
+    document.getElementById(
+        "creditosHoje"
+    ).textContent =
+        "🪙 Créditos hoje: " +
+        formatarCredito(dados.creditosHoje);
+
+
+    document.getElementById(
+        "sequenciaInicio"
+    ).textContent =
+        dados.sequencia + " dias";
+
+
+    document.getElementById(
+        "carteiraInicio"
+    ).textContent =
+        formatarCredito(dados.carteira) +
+        " créditos";
+
+
+    const progresso =
+        Math.min(
+            100,
+            (dados.carteira / CUSTO_PIZZA) * 100
+        );
+
+
+    document.getElementById(
+        "progressoPizza"
+    ).textContent =
+        formatarCredito(dados.carteira) +
+        " / " +
+        CUSTO_PIZZA +
+        " créditos";
+
+
+    document.getElementById(
+        "barraPizza"
+    ).style.width =
+        progresso + "%";
+
+}
+
+
+/* =====================================================
+   CARTEIRA
+================
