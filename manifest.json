@@ -1,8 +1,17 @@
 {
   "name": "ÁGUA+",
   "short_name": "ÁGUA+",
+  "description": "Hidrate-se, ganhe e transforme.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#1677F2"
+  "theme_color": "#2196f3",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
