@@ -531,6 +531,7 @@ h3 {
 </section>
 
 
+<!-- 
 <!-- ================= RECOMPENSAS ================= -->
 
 <section id="recompensas" class="tela">
@@ -539,30 +540,197 @@ h3 {
 
         <div class="titulo">🎁 RECOMPENSAS</div>
 
-        <div class="recompensa">
-
-            <div class="emoji">🍕</div>
-
-            <h2>Pizza</h2>
-
-            <div class="preco">
-                🪙 20 créditos
-            </div>
-
-            <div id="saldoParaPizza">
-                Seu saldo: 0 créditos
-            </div>
-
-            <br>
-
-            <button
-                id="btnPizza"
-                class="btn-trocar"
-                onclick="confirmarResgate()">
-                TROCAR POR PIZZA
-            </button>
-
+        <div class="saldo-label">
+            Seu saldo disponível
         </div>
+
+        <div class="saldo" id="saldoRecompensas">
+            0
+        </div>
+
+        <div style="text-align:center;font-size:18px;">
+            🪙 créditos
+        </div>
+
+    </div>
+
+
+    <!-- PIZZA -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">🍕</div>
+
+        <h2>Pizza</h2>
+
+        <div class="preco">
+            🪙 20 créditos
+        </div>
+
+        <div id="saldoPizza">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnPizza"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Pizza', 20, '🍕')">
+
+            TROCAR POR PIZZA
+
+        </button>
+
+    </div>
+
+
+    <!-- HAMBÚRGUER -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">🍔</div>
+
+        <h2>Hambúrguer</h2>
+
+        <div class="preco">
+            🪙 15 créditos
+        </div>
+
+        <div id="saldoHamburguer">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnHamburguer"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Hambúrguer', 15, '🍔')">
+
+            TROCAR POR HAMBÚRGUER
+
+        </button>
+
+    </div>
+
+
+    <!-- SORVETE -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">🍦</div>
+
+        <h2>Sorvete</h2>
+
+        <div class="preco">
+            🪙 10 créditos
+        </div>
+
+        <div id="saldoSorvete">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnSorvete"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Sorvete', 10, '🍦')">
+
+            TROCAR POR SORVETE
+
+        </button>
+
+    </div>
+
+
+    <!-- AÇAÍ -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">🥤</div>
+
+        <h2>Açaí</h2>
+
+        <div class="preco">
+            🪙 10 créditos
+        </div>
+
+        <div id="saldoAcai">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnAcai"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Açaí', 10, '🥤')">
+
+            TROCAR POR AÇAÍ
+
+        </button>
+
+    </div>
+
+
+    <!-- BATOM -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">💄</div>
+
+        <h2>Batom</h2>
+
+        <div class="preco">
+            🪙 1 crédito
+        </div>
+
+        <div id="saldoBatom">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnBatom"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Batom', 1, '💄')">
+
+            TROCAR POR BATOM
+
+        </button>
+
+    </div>
+
+
+    <!-- DAY FREE -->
+
+    <div class="card recompensa">
+
+        <div class="emoji">🎉</div>
+
+        <h2>Day Free</h2>
+
+        <div class="preco">
+            🪙 12 créditos
+        </div>
+
+        <div id="saldoDayFree">
+            Seu saldo: 0 créditos
+        </div>
+
+        <br>
+
+        <button
+            id="btnDayFree"
+            class="btn-trocar"
+            onclick="confirmarRecompensa('Day Free', 12, '🎉')">
+
+            TROCAR POR DAY FREE
+
+        </button>
 
     </div>
 
@@ -1210,32 +1378,103 @@ function atualizarCarteira() {
 
 function atualizarRecompensas() {
 
+    const saldo = Number(dados.carteira) || 0;
+
     document.getElementById(
-        "saldoParaPizza"
-    ).textContent =
+        "saldoRecompensas"
+    ).textContent = formatarCredito(saldo);
+
+
+    atualizarBotaoRecompensa(
+        "saldoPizza",
+        "btnPizza",
+        saldo,
+        20,
+        "PIZZA"
+    );
+
+
+    atualizarBotaoRecompensa(
+        "saldoHamburguer",
+        "btnHamburguer",
+        saldo,
+        15,
+        "HAMBÚRGUER"
+    );
+
+
+    atualizarBotaoRecompensa(
+        "saldoSorvete",
+        "btnSorvete",
+        saldo,
+        10,
+        "SORVETE"
+    );
+
+
+    atualizarBotaoRecompensa(
+        "saldoAcai",
+        "btnAcai",
+        saldo,
+        10,
+        "AÇAÍ"
+    );
+
+
+    atualizarBotaoRecompensa(
+        "saldoBatom",
+        "btnBatom",
+        saldo,
+        1,
+        "BATOM"
+    );
+
+
+    atualizarBotaoRecompensa(
+        "saldoDayFree",
+        "btnDayFree",
+        saldo,
+        12,
+        "DAY FREE"
+    );
+
+}
+
+    function atualizarBotaoRecompensa(
+    idSaldo,
+    idBotao,
+    saldo,
+    custo,
+    nome
+) {
+
+    const saldoElemento =
+        document.getElementById(idSaldo);
+
+    const botao =
+        document.getElementById(idBotao);
+
+
+    saldoElemento.textContent =
         "Seu saldo: " +
-        formatarCredito(dados.carteira) +
+        formatarCredito(saldo) +
         " créditos";
 
 
-    const botao =
-        document.getElementById("btnPizza");
-
-
-    if (dados.carteira >= CUSTO_PIZZA) {
+    if (saldo >= custo) {
 
         botao.disabled = false;
+
         botao.textContent =
-            "TROCAR POR PIZZA";
+            "TROCAR POR " + nome;
 
     } else {
 
         botao.disabled = true;
+
         botao.textContent =
             "FALTAM " +
-            formatarCredito(
-                CUSTO_PIZZA - dados.carteira
-            ) +
+            formatarCredito(custo - saldo) +
             " CRÉDITOS";
 
     }
