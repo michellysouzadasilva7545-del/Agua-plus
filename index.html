@@ -1788,6 +1788,15 @@ verificarNovoDia();
 atualizarTudo();
 
 </script>
-
+    
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => console.log("ÁGUA+ instalado"))
+            .catch(erro => console.log("Erro:", erro));
+    });
+}
+</script>
 </body>
 </html>
